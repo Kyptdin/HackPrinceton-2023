@@ -1,17 +1,16 @@
-const { Configuration, OpenAIApi } = require("openai");
-require('dotenv').config()
+const OpenAI = require("openai");
+require("dotenv").config();
 
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
-async function runCompletion () {
-    const completion = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: "How are you today?",
-    });
-    console.log(completion.data.choices[0].text);
+async function runCompletion() {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [{ role: "user", content: "How are you today?" }],
+  });
+  console.log(completion.choices[0].message.content);
 }
 
 runCompletion();
